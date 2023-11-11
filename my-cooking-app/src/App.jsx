@@ -11,7 +11,7 @@ import SignUp from './components/signUp.jsx';
 import './App.css';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(true);
   
   if(!token) {
     return <Login setToken={setToken} />
@@ -29,7 +29,7 @@ function App() {
                 <Home />
               </>
             } />
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="/posts" element={<PostList />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/signup" element={<SignUp />} />
