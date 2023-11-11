@@ -1,59 +1,57 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require('../dbPool');
+const User = require('../models/user'); 
 
 const router = express.Router();
 
 // Login endpoint
+router.post('/login', async (req, res) => {
+  const { emailId, password } = req.body;
+  console.log('Attempting to log in with:', emailId);
 
-router.post('/login', (req, res) => {
-    const { emailId: email, password } = req.body; 
-  
-    // Query to find the user by email
-    const query = 'SELECT * FROM users WHERE email = ?'; 
-    pool.query(query, [email], async (error, results) => { // Pass the email to the query
-      if (error) {
-        res.status(500).json({ message: 'Something went wrong' });
-      } else if (results.length > 0) {
-        // Compare hashed password
-        const match = await bcrypt.compare(password, results[0].password);
-        if (match) {
-          // Create and send the token
-          const token = jwt.sign({ userId: results[0].id }, 'your_secret_key');
-          res.json({ token });
-        } else {
-          res.status(401).json({ message: 'Invalid credentials' });
-        }
+  try {
+    const user = await User.findOne({ where: { emailId: emailId } });
+    if (user) {
+      console.log('User found in database, comparing passwords...');
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        console.log('Password match, creating token...');
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'your_secret_key');
+        res.json({ token });
       } else {
-        res.status(404).json({ message: 'User not found' });
+        console.log('Password mismatch');
+        res.status(401).json({ message: 'Invalid credentials' });
       }
-    });
-  });
-
-
-  router.post('/api/users/signup', async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
-  
-    // Log the received data to ensure it's correct
-    console.log('Received data:', { firstName, lastName, email, password });
-  
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
-      pool.query(query, [firstName, lastName, email, hashedPassword], (error, results) => {
-        if (error) {
-          console.error('SQL Error:', error); // Log SQL errors here
-          res.status(500).json({ message: 'Error while creating user', error: error.sqlMessage });
-        } else {
-          res.status(201).json({ message: 'User created successfully' });
-        }
-      });
-    } catch (error) {
-      console.error('Server Error:', error); // Log server errors here
-      res.status(500).json({ message: 'Server error during sign up', error: error.message });
+    } else {
+      console.log('No user found with email:', emailId);
+      res.status(404).json({ message: 'User not found' });
     }
-  });
+  } catch (error) {
+    console.error("Login error: ", error);
+    res.status(500).json({ message: 'Error during login', error: error.message });
+  }
+});
 
 
-  module.exports = router;
+router.post('/signup', async (req, res) => {
+  const { firstName, lastName, emailId, password } = req.body;
+
+  try {
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // Create user with Sequelize
+    const newUser = await User.create({
+      firstName,
+      lastName,
+      emailId,
+      password: hashedPassword
+    });
+    res.status(201).json({ message: 'User created successfully', data: newUser });
+  } catch (error) {
+    console.error('Error during sign up: ', error);
+    res.status(500).json({ message: 'Error during sign up', error: error.message });
+  }
+});
+
+module.exports = router;

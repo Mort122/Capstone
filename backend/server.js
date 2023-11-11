@@ -1,7 +1,4 @@
 const express = require("express");
-const mysql = require('mysql');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const app = express();
 require("dotenv").config();
 const dbConnect = require("./dbConnect");
@@ -15,7 +12,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/meals', mealRoutes);
-app.use('/api/users', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to mySQL application." });
