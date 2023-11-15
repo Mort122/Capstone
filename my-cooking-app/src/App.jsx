@@ -7,6 +7,7 @@ import Navbar from './components/navbar.jsx';
 import Home from './components/home.jsx';
 import PostList from './components/posts.jsx';
 import Recipes from './components/recipes.jsx';
+// import RecipeDetail from './components/RecipeDetail'; 
 import SignUp from './components/signUp.jsx';
 import './App.css';
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/posts" element={<PostList />} />
             <Route path="/recipes" element={<Recipes />} />
+            <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
             {/* <Route path="/signup" element={<SignUp />} /> */}
           </Routes>
         </div>

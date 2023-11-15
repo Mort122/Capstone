@@ -1,23 +1,17 @@
 import React from 'react';
-import { Typography, Box, Container } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 
-const Home = ({ posts }) => {
+function Home() {
   return (
-    <Box 
-      // display="flex"
-      
-      // flexDirection="column"
-      // alignItems="center"
-      // height="100vh"
-      // paddingTop={2}
-    >
-      <Typography variant="h4" align="center">
-        Home Page
-      </Typography>
-    </Box>
+    <Container maxWidth="lg">
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Welcome to the Recipe Sharing Website
+        </Typography>
+        {/* Additional home page content if any */}
+      </Box>
+    </Container>
   );
 }
 
 export default Home;
-
-
