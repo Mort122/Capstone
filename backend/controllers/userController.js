@@ -12,19 +12,24 @@ const getUsers = (res) => {
 }
 
 const createUsers = async (req, res) => {
-    const { firstName, lastName, emailId, password } = req;
+    const { firstName, lastName, emailId, password } = req.body;
+
+
 
     try {
       // Hash password
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log("hashed password", hashedPassword);
       // Create user with Sequelize
+      console.log('creatingUser!', User.create);
+
       const newUser = await User.create({
         firstName,
         lastName,
         emailId,
         password: hashedPassword
       });
+
       res.status(201).json({ message: 'User created successfully', data: newUser });
     } catch (error) {
       console.error('Error during sign up: ', error);

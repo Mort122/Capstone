@@ -11,14 +11,14 @@ import SignUp from './components/signUp.jsx';
 import './App.css';
 
 function App() {
-  const [token, setToken] = useState(true);
+  const [token, setToken] = useState();
   
   if(!token) {
     return <Login setToken={setToken} />
   }
 
   return (
-    <Router>
+  
       <ThemeProvider theme={theme}>
         <div className="App">
           <Navbar />
@@ -32,11 +32,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/posts" element={<PostList />} />
             <Route path="/recipes" element={<Recipes />} />
-            <Route path="/signup" element={<SignUp />} />
+            {/* <Route path="/signup" element={<SignUp />} /> */}
           </Routes>
         </div>
       </ThemeProvider>
-    </Router>
+
   );
 }
 

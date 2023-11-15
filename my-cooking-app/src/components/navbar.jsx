@@ -1,18 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 const Navbar = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const navigate = useNavigate();
+
+    const NavLink = ({ to, label }) => (
+        <Button color="inherit" onClick={() => navigate(to)}>
+            <Typography variant="h6" component="span">
+                {label}
+            </Typography>
+        </Button>
+    );
+
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" color="primary">
             <Toolbar>
-                <Button color="inherit" component={Link} to="/login">Login</Button>
-                <Button color="inherit" component={Link} to="/">Home</Button>
-                <Button color="inherit" component={Link} to="/posts">Posts</Button>
-                <Button color="inherit" component={Link} to="/recipes">Recipes</Button>
+                {isMobile ? (
+                    // Replace this comment with your mobile view components
+                    <div>Mobile View Placeholder</div>
+                ) : (
+                    <>
+                        {/* <NavLink to="/login" label="Login" /> */}
+                        <NavLink to="/" label="Home" />
+                        <NavLink to="/posts" label="Posts" />
+                        <NavLink to="/recipes" label="Recipes" />
+                    </>
+                )}
             </Toolbar>
         </AppBar>
     );
-}
+};
 
 export default Navbar;

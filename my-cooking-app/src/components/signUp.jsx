@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Container, Grid, TextField, Button, Card, Typography, Alert } from '@mui/material';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -8,6 +10,8 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -23,6 +27,8 @@ const SignUp = () => {
         password 
       });
       // Handle response from the server
+      navigate('/login');
+      window.location.reload();
       console.log(response.data);
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Something went wrong during sign up.');
@@ -30,63 +36,75 @@ const SignUp = () => {
   };
 
   return (
-    <div id="signup-container">
-      <form onSubmit={handleSignUp}>
-        <h2>Sign Up</h2>
-        <div className="form-control">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <div className="error">{error}</div>}
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <Container maxWidth="xs">
+      <Card sx={{ mt: 8, p: 3 }}>
+        <Typography variant="h4" align="center" gutterBottom>Sign Up</Typography>
+        {error && <Alert severity="error">{error}</Alert>}
+        <form onSubmit={handleSignUp}>
+          <Grid container spacing={2}>
+            {/* First Name */}
+            <Grid item xs={12}>
+              <TextField
+                label="First Name"
+                type="text"
+                fullWidth
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </Grid>
+            {/* Last Name */}
+            <Grid item xs={12}>
+              <TextField
+                label="Last Name"
+                type="text"
+                fullWidth
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </Grid>
+            {/* Email */}
+            <Grid item xs={12}>
+              <TextField
+                label="Email"
+                type="email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Grid>
+            {/* Password */}
+            <Grid item xs={12}>
+              <TextField
+                label="Password"
+                type="password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Grid>
+            {/* Confirm Password */}
+            <Grid item xs={12}>
+              <TextField
+                label="Confirm Password"
+                type="password"
+                fullWidth
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </Grid>
+            {/* Submit Button */}
+            <Grid item xs={12}>
+              <Button type="submit" fullWidth variant="contained" color="primary">Sign Up</Button>-
+            </Grid>
+          </Grid>
+        </form>
+      </Card>
+    </Container>
   );
 };
 
