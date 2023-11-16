@@ -26,7 +26,7 @@ const getAllPosts = async (req, res) => {
             }],
         });
         const simplifiedPosts = posts.map(post => post.get({ plain: true }));
-        console.log(posts);
+        // console.log(posts);
         res.json(simplifiedPosts);
     } catch (error) {
         res.status(500).send({ message: error.message });

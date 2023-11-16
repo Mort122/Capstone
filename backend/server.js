@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
 });
 
 
-app.get('/api/meals/:id', mealController.getMealById);
+app.get('/api/meals/:idMeal', mealController.getMealById);
+
 
 
   

@@ -14,7 +14,7 @@ const Recipes = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setMeals(data.data); // Assuming the backend sends the meals in a 'data' property
+        setMeals(data.data); 
       } catch (error) {
         console.error('Error fetching meals:', error);
       }
@@ -23,8 +23,8 @@ const Recipes = () => {
     fetchMeals();
   }, []);
 
-  const handleCardClick = (recipeId) => {
-    navigate(`/recipes/${recipeId}`);
+  const handleCardClick = (idMeal) => {
+    navigate(`/recipes/${idMeal}`);
   };
 
   return (
@@ -34,8 +34,10 @@ const Recipes = () => {
       </Typography>
       <Grid container spacing={4}>
         {meals.map((meal) => (
-          <Grid item key={meal.id} xs={12} sm={6} md={4}>
-            <Card onClick={() => handleCardClick(meal.id)} sx={{ cursor: 'pointer' }}>
+          //this line changine "idMeal" to "id" sends a request for the Id that my server has given the recipe, instead of "undefined" I need to send a request for the 50k+ id number that the API has given the recipes
+          <Grid item key={meal.idMeal} xs={12} sm={6} md={4}>
+            {/* //and this line    */}
+            <Card onClick={() => handleCardClick(meal.idMeal)} sx={{ cursor: 'pointer' }}>
               <CardActionArea>
                 <CardMedia
                   component="img"

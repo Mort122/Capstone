@@ -12,7 +12,7 @@ function HomePage() {
                 const response = await fetch('/api/posts');
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data)
+                    // console.log(data)
                     setPosts(data);
                 } else {
                     // Handle errors

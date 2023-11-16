@@ -33,7 +33,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/posts" element={<PostCreationForm />} />
             <Route path="/recipes" element={<Recipes />} />
-            <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
+            <Route path="/recipes/:idMeal" element={<RecipeDetail />} />
             {/* <Route path="/signup" element={<SignUp />} /> */}
           </Routes>
         </div>

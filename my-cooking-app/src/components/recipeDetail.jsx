@@ -5,75 +5,62 @@ import { Container, Typography, CircularProgress, Card, CardMedia, CardContent }
 const RecipeDetail = () => {
     const [recipe, setRecipe] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const { recipeId } = useParams();
+    const { idMeal } = useParams(); 
 
     useEffect(() => {
+        console.log("Fetching details for recipe with ID:", idMeal);
         const fetchRecipe = async () => {
-            setIsLoading(true); // Make sure to set loading true when starting the fetch
+            setIsLoading(true);
             try {
-                const response = await fetch(`/api/meals/${recipeId}`);
+                const response = await fetch(`/api/meals/${idMeal}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setRecipe(data); // Here you update the recipe state with the fetched data
-                console.log('Fetched recipe:', data); // This logs the fetched recipe data
+                setRecipe(data.meals[0]); // Assuming the API returns an array of meals and we want the first
+                console.log('Fetched recipe:', data.meals[0]);
             } catch (error) {
                 console.error('Error fetching recipe:', error);
             } finally {
-                setIsLoading(false); // Set loading to false after the fetch is complete
+                setIsLoading(false);
             }
         };
 
         fetchRecipe();
-    }, [recipeId]);
+    }, [idMeal]);
 
-        // First, check if we are still loading the data
-        if (isLoading) {
-            return (
-                <Container maxWidth="md">
-                    <CircularProgress />
-                </Container>
-            );
-        }
-    
-        // Next, check if the recipe data is available
-        if (!recipe) {
-            return (
-                <Container maxWidth="md">
-                    <Typography variant="h6">Recipe not found.</Typography>
-                </Container>
-            );
-        }
+    if (isLoading) {
+        return (
+            <Container maxWidth="md">
+                <CircularProgress />
+            </Container>
+        );
+    }
 
-    // Additional console.log can be placed here to see the state update after each render
-    console.log('Current recipe state:', recipe);
+    if (!recipe) {
+        return (
+            <Container maxWidth="md">
+                <Typography variant="h6">Recipe not found.</Typography>
+            </Container>
+        );
+    }
 
     return (
         <Container maxWidth="md">
-            {isLoading ? (
-                <CircularProgress />
-            ) : recipe ? (
-                <Card>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image={recipe.imageUrl}
-                        alt={recipe.name}
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h4" component="h1">
-                            {recipe.name}
-                        </Typography>
-                        <Typography variant="body1">
-                            {recipe.description}
-                        </Typography>
-                        {/* Add more details as needed */}
-                    </CardContent>
-                </Card>
-            ) : (
-                <Typography variant="h6">Recipe not found.</Typography>
-            )}
+            <Card>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={recipe.strMealThumb}
+                    alt={recipe.strMeal}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h4" component="h1">
+                        {recipe.strMeal}
+                    </Typography>
+                    {/* Add more details as needed */}
+                </CardContent>
+            </Card>
         </Container>
     );
 };

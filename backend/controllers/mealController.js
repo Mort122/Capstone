@@ -54,11 +54,28 @@ const getAllMeals = (req, res) => {
 
 //I need to pull the Id from my database instead of the api
 
+// const getMealById = async (req, res) => {
+//     const id = req.params.id; // Use the ID from your own database, not from TheMealDB API
+//     try {
+//         const meal = await Models.Meal.findByPk(id);
+//         if (meal) {
+//             res.json(meal);
+//         } else {
+//             res.status(404).json({ message: "Meal not found" });
+//         }
+//     } catch (error) {
+//         console.error('Error fetching meal by ID:', error);
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
 const getMealById = async (req, res) => {
-    const id = req.params.id; // Use the ID from your own database, not from TheMealDB API
+    const { idMeal } = req.params; // Use the ID from TheMealDB API, not from your database
+
     try {
-        const meal = await Models.Meal.findByPk(id);
-        if (meal) {
+        const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+        if (response.data.meals) {
+            const meal = response.data.meals[0]; // Assuming there's always one meal returned
             res.json(meal);
         } else {
             res.status(404).json({ message: "Meal not found" });
@@ -68,6 +85,7 @@ const getMealById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 
 const createMeal = (req, res) => {
