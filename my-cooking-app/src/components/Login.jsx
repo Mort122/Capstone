@@ -49,7 +49,7 @@ const Login = (props) => {
   return (
     <Container maxWidth="xs">
       <Card sx={{ mt: 8, p: 3 }}>
-        <Typography variant="h4" align="center" gutterBottom>Welcome to RecipeShare!</Typography>
+        <Typography variant="h4" align="center" gutterBottom>Welcome to FlavorVerse!</Typography>
         {error && <Alert severity="error">{error}</Alert>}
         <form onSubmit={handleLogin}>
           <Grid container spacing={2}>

@@ -26,19 +26,19 @@ function HomePage() {
 
     return (
       <Box>
-          {posts.map((post, index) => (
-              <Post
-                  key={index}
-                  title={post.title}
-                  description={post.description}
-                  image={post.image}
-                  userName={"User Name"} // Replace with actual user name data
-                  userAvatar={"User Avatar"} // Replace with actual user avatar data
-                  createdAt={post.createdAt} // Replace with actual creation date data
-              />
-          ))}
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            title={post.title}
+            description={post.description}
+            image={post.image}
+            userName={post.user?.name} // Use optional chaining in case user data is missing
+            userAvatar={post.user?.avatar} // Use optional chaining in case user data is missing
+            createdAt={post.createdAt}
+          />
+        ))}
       </Box>
-  );
-}
+    );
+  }
 
 export default HomePage;

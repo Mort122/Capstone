@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelizeInstance = require("../dbConnect").Sequelize; 
+const Post = require('./posts');
 
 class User extends Model {}
 
@@ -33,5 +34,6 @@ User.init({
   timestamps: true,
   freezeTableName: true
 });
+
 
 module.exports = User;

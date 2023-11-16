@@ -28,8 +28,9 @@ const Recipes = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ pt: 10 }}>
       <Typography variant="h4" component="h1" gutterBottom>
+        FlavorVerse Recipes
       </Typography>
       <Grid container spacing={4}>
         {meals.map((meal) => (

@@ -5,6 +5,9 @@ const Comment = require('./comments');
 const Like = require('./likes');
 const Meal = require('./meals');
 
+User.hasMany(Post, { foreignKey: 'userId' });
+Post.belongsTo(User, { as: 'user' });
+
 async function init() {
     await User.sync();
     await Post.sync();

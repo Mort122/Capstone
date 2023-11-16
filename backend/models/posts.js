@@ -8,12 +8,12 @@ Post.init({
     title: {
         type: DataTypes.STRING,
         allowNull: false,
-        required: true
+        // required: true
     },
     description: {
         type: DataTypes.TEXT,
         allowNull: false,
-        required: true
+        // required: true
     },
     image: {
         type: DataTypes.STRING,
@@ -26,6 +26,5 @@ Post.init({
     freezeTableName: true
 });
 
-Post.belongsTo(User);
 
 module.exports = Post;

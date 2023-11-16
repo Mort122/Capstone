@@ -18,7 +18,13 @@ const createPost = (req, res) => {
 
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await Models.Post.findAll();
+        const posts = await Models.Post.findAll({
+            include: [{
+                model: Models.User,
+                as: 'user', // Use this 'as' if you've defined it in your association
+                attributes: ['id', 'firstName', 'lastName'], // Select only necessary fields of the User
+            }],
+        });
         res.json(posts);
     } catch (error) {
         res.status(500).send({ message: error.message });

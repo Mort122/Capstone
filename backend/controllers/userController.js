@@ -4,7 +4,7 @@ const { User } = require("../models"); // Destructure to get the User model dire
 const bcrypt = require('bcrypt');
 
 const getUsers = (res) => {
-    Models.User.findAll({}).then(function (data) {
+    User.findAll({}).then(function (data) {
         res.send({result: 200 , data: data})
     }).catch(err => {
         throw err

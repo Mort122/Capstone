@@ -5,7 +5,7 @@ import Login from './components/Login';
 import theme from '../theme/theme';
 import Navbar from './components/navbar.jsx';
 import Home from './components/home.jsx';
-import PostList from './components/posts.jsx';
+import PostCreationForm from './components/posts.jsx';
 import Recipes from './components/recipes.jsx';
 import RecipeDetail from './components/recipeDetail'; 
 import SignUp from './components/signUp.jsx';
@@ -31,7 +31,7 @@ function App() {
               </>
             } />
             <Route path="/login" element={<Login />} />
-            <Route path="/posts" element={<PostList />} />
+            <Route path="/posts" element={<PostCreationForm />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
             {/* <Route path="/signup" element={<SignUp />} /> */}

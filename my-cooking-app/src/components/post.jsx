@@ -14,12 +14,23 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
 
-function Post({ title, description, image, userName, userAvatar, createdAt }) {
-  // You might need to adjust the logic for userName and userAvatar based on your actual data structure
+function Post({ title, description, image, userName, userAvatar, createdAt }) { 
   return (
     <Box mb={2}>
       <Card sx={{ maxWidth: 500, mx: 'auto' }}>
-        {/* ... rest of your Card component */}
+        <CardHeader
+          avatar={
+            userAvatar ? (
+              <Avatar src={userAvatar} aria-label="user avatar">
+                {userName?.[0]}
+              </Avatar>
+            ) : (
+              <Avatar aria-label="user avatar">{userName?.[0]}</Avatar>
+            )
+          }
+          // ... other CardHeader props
+        />
+        {/* ... rest of your component */}
       </Card>
     </Box>
   );
