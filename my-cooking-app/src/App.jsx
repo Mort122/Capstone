@@ -7,7 +7,7 @@ import Navbar from './components/navbar.jsx';
 import Home from './components/home.jsx';
 import PostList from './components/posts.jsx';
 import Recipes from './components/recipes.jsx';
-// import RecipeDetail from './components/RecipeDetail'; 
+import RecipeDetail from './components/recipeDetail'; 
 import SignUp from './components/signUp.jsx';
 import './App.css';
 

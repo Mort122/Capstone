@@ -7,6 +7,8 @@ const dbConnect = require("./dbConnect");
 const userRoutes = require('./routes/userRoutes');
 const mealRoutes = require('./routes/mealRoutes');
 const authRoutes = require('./routes/authRoutes'); 
+const mealController = require('./controllers/mealController');
+const postRoutes = require('./routes/postRoutes');
 
 
 app.use(cors());
@@ -18,11 +20,14 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/meals', mealRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/posts', postRoutes);
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to mySQL application." });
 });
 
+
+app.get('/api/meals/:id', mealController.getMealById);
 
 
   

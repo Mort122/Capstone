@@ -16,7 +16,17 @@ const createPost = (req, res) => {
     });
 };
 
+const getAllPosts = async (req, res) => {
+    try {
+        const posts = await Models.Post.findAll();
+        res.json(posts);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 
 module.exports = {
-    createPost
+    createPost,
+    getAllPosts
 };

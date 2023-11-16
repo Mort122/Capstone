@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Grid, Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material';
 
-function Recipes() {
+const Recipes = () => {
   const [meals, setMeals] = useState([]);
   const navigate = useNavigate();
 
@@ -13,8 +13,8 @@ function Recipes() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const responseData = await response.json();
-        setMeals(responseData.data);
+        const data = await response.json();
+        setMeals(data.data); // Assuming the backend sends the meals in a 'data' property
       } catch (error) {
         console.error('Error fetching meals:', error);
       }
@@ -30,7 +30,6 @@ function Recipes() {
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" component="h1" gutterBottom>
-        Recipes
       </Typography>
       <Grid container spacing={4}>
         {meals.map((meal) => (
