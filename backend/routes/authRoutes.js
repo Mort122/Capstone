@@ -19,7 +19,6 @@ router.post('/login', async (req, res) => {
       if (match) {
         console.log('Password match, creating token...');
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'your_secret_key');
-        // const token = 'lol'
         res.json({ token });
       } else {
         console.log('Password mismatch');
