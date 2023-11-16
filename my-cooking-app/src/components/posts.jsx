@@ -7,7 +7,7 @@ function PostCreationForm() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  // const [image, setImage] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,39 +42,9 @@ function PostCreationForm() {
           sx={{ mt: 1 }}
         >
           <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="title"
-            label="Title"
-            name="title"
-            autoComplete="title"
-            autoFocus
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            // ... other text fields ...
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="description"
-            label="Description"
-            id="description"
-            multiline
-            rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="image"
-            label="Image URL (optional)"
-            id="image"
-            autoComplete="image"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
+          {/* Remove the TextField for the image URL */}
           <Button
             type="submit"
             fullWidth

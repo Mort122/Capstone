@@ -12,6 +12,7 @@ function HomePage() {
                 const response = await fetch('/api/posts');
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data)
                     setPosts(data);
                 } else {
                     // Handle errors
@@ -25,15 +26,14 @@ function HomePage() {
     }, []);
 
     return (
-      <Box>
+      <Box sx={{ paddingTop: '64px' }}>
         {posts.map((post) => (
           <Post
             key={post.id}
             title={post.title}
             description={post.description}
             image={post.image}
-            userName={post.user?.name} // Use optional chaining in case user data is missing
-            userAvatar={post.user?.avatar} // Use optional chaining in case user data is missing
+            userName={post.user?.name}
             createdAt={post.createdAt}
           />
         ))}

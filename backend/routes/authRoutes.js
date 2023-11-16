@@ -9,7 +9,7 @@ const router = express.Router();
 // Login endpoint
 router.post('/login', async (req, res) => {
   const { emailId, password } = req.body;
-  console.log('Attempting to log in with:', emailId);
+  // console.log('Attempting to log in with:', emailId);
 
   try {
     const user = await User.findOne({ where: { emailId: emailId } });
@@ -18,8 +18,8 @@ router.post('/login', async (req, res) => {
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         console.log('Password match, creating token...');
-        //const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'your_secret_key');
-        const token = 'lol'
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'your_secret_key');
+        // const token = 'lol'
         res.json({ token });
       } else {
         console.log('Password mismatch');

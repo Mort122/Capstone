@@ -21,11 +21,13 @@ const getAllPosts = async (req, res) => {
         const posts = await Models.Post.findAll({
             include: [{
                 model: Models.User,
-                as: 'user', // Use this 'as' if you've defined it in your association
-                attributes: ['id', 'firstName', 'lastName'], // Select only necessary fields of the User
+                as: 'user',
+                attributes: ['id', 'firstName', 'lastName'],
             }],
         });
-        res.json(posts);
+        const simplifiedPosts = posts.map(post => post.get({ plain: true }));
+        console.log(posts);
+        res.json(simplifiedPosts);
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
