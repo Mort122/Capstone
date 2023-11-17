@@ -12,10 +12,11 @@ function HomePage() {
                 const response = await fetch('/api/posts');
                 if (response.ok) {
                     const data = await response.json();
+                    const sortedPosts = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                     // console.log(data)
-                    setPosts(data);
+                    setPosts(sortedPosts);
                 } else {
-                    // Handle errors
+                    
                 }
             } catch (error) {
                 console.error('Error fetching posts:', error);

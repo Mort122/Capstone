@@ -28,7 +28,6 @@ const getApiMealIdByLocalId = async (localId) => {
 
 
 
-
 Meal.init({
     id: {
         type: DataTypes.INTEGER,
