@@ -46,26 +46,35 @@ const RecipeDetail = () => {
             </Container>
         );
     }
-console.log(recipe.strMeal);
-    return (
-        <Container maxWidth="md">
-            <Card>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={recipe.strMealThumb}
-                    alt={recipe.strMeal}
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h4" component="h1">
-                        {recipe.strMeal}
-                        {/* {recipe.} */}
-                    </Typography>
-                    {/* Add more details as needed */}
-                </CardContent>
-            </Card>
-        </Container>
-    );
+// console.log(recipe.strMeal);
+return (
+    <Container maxWidth="lg">
+        <Card>
+            <CardMedia
+                component="img"
+                height="140"
+                image={recipe.strMealThumb}
+                alt={recipe.strMeal}
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h4" component="h1">
+                    {recipe.strMeal}
+                </Typography>
+
+                {/* Instructions */}
+                <Typography variant="body1" paragraph>
+                    {recipe.strArea}
+                </Typography>
+
+                {/* Area */}
+                <Typography variant="body2">
+                    {recipe.strInstructions}
+                </Typography>
+                {/* Add more details as needed */}
+            </CardContent>
+        </Card>
+    </Container>
+);
 };
 
 export default RecipeDetail;
