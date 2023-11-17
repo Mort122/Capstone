@@ -7,7 +7,9 @@ import Navbar from './components/navbar.jsx';
 import Home from './components/home.jsx';
 import PostCreationForm from './components/posts.jsx';
 import Recipes from './components/recipes.jsx';
-import RecipeDetail from './components/recipeDetail'; 
+import RecipeDetail from './components/recipeDetail';
+import Profile from './components/profile';
+import MyAccount from './components/myAccount';
 import SignUp from './components/signUp.jsx';
 import './App.css';
 
@@ -34,6 +36,8 @@ function App() {
             <Route path="/posts" element={<PostCreationForm />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/recipes/:idMeal" element={<RecipeDetail />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/my-account" element={<MyAccount />} />
             {/* <Route path="/signup" element={<SignUp />} /> */}
           </Routes>
         </div>

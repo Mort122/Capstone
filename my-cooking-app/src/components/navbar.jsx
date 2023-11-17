@@ -23,6 +23,11 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
+    const handleMenuClick = (path) => {
+        handleClose();
+        navigate(path);
+    };
+
     const NavLink = ({ to, label }) => (
         <Button color="inherit" onClick={() => navigate(to)}>
             <Typography variant="h6" component="span">
@@ -114,8 +119,8 @@ const Navbar = () => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={() => handleMenuClick('/profile')}>Profile</MenuItem>
+                        <MenuItem onClick={() => handleMenuClick('/my-account')}>My account</MenuItem>
                         </Menu>
                     </>
                 )}
