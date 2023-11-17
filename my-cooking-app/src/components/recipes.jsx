@@ -26,7 +26,7 @@ const Recipes = () => {
   const handleCardClick = (idMeal) => {
     navigate(`/recipes/${idMeal}`);
   };
-
+console.log('checking what meal is', meals);
   return (
     <Container maxWidth="lg" sx={{ pt: 10 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -34,10 +34,11 @@ const Recipes = () => {
       </Typography>
       <Grid container spacing={4}>
         {meals.map((meal) => (
+          
           //this line changine "idMeal" to "id" sends a request for the Id that my server has given the recipe, instead of "undefined" I need to send a request for the 50k+ id number that the API has given the recipes
-          <Grid item key={meal.idMeal} xs={12} sm={6} md={4}>
+          <Grid item key={meal.id} xs={12} sm={6} md={4}>
             {/* //and this line    */}
-            <Card onClick={() => handleCardClick(meal.idMeal)} sx={{ cursor: 'pointer' }}>
+            <Card onClick={() => handleCardClick(meal.id)} sx={{ cursor: 'pointer' }}>
               <CardActionArea>
                 <CardMedia
                   component="img"

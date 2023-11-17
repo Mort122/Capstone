@@ -1,5 +1,7 @@
 const axios = require('axios'); 
 const Models = require('../models');
+const { getApiMealIdByLocalId } = require('../models/meals');
+const sequelizeInstance = require("../dbConnect").Sequelize; 
 
 
 const getAllMeals = (req, res) => {
@@ -19,29 +21,43 @@ const getAllMeals = (req, res) => {
         .then(results => {
             const meals = results.map(({data}) => {
                 const meal = data.meals[0];
-                const {strMeal: name, strMealThumb: imageUrl, strInstructions: description, strArea: cuisine} = meal;
+                const {strMeal: name, strMealThumb: imageUrl, strInstructions: description, strArea: cuisine, idMeal: apiMealId} = meal;
                 return {
                     name, 
                     imageUrl, 
                     description, 
-                    cuisine
+                    cuisine,
+                    apiMealId // Add this line to include TheMealDB's ID
                 };
             });
 
             // Check if meals already exist in the DB and create them if they do not
-            const mealCreationPromises = meals.map(async (mealData) => {
-                // Check for an existing meal by a unique identifier, here we use 'name'
-                const existingMeal = await Models.Meal.findOne({ where: { name: mealData.name } });
-                if (!existingMeal) {
-                    return Models.Meal.create(mealData);
-                }
-                return existingMeal; // If it exists, we return the existing record
-            });
-
-            return Promise.all(mealCreationPromises);
+            return Promise.all(meals.map(mealData => {
+                return Models.Meal.findOrCreate({
+                    where: { name: mealData.name },
+                    defaults: mealData
+                }).then(([meal, created]) => {
+                    return { ...meal.get({ plain: true }), apiMealId: mealData.apiMealId };
+                });
+            }));
         })
         .then(createdMeals => {
-            // All the meals are now either found or created in the DB
+            // Populate or update meal_mapping table
+            const mappingPromises = createdMeals.map(({ id, apiMealId }) => {
+                if (apiMealId) {
+                    const mappingQuery = 'INSERT INTO meal_mapping (localId, apiMealId) VALUES (?, ?) ON DUPLICATE KEY UPDATE apiMealId = ?';
+                    return sequelizeInstance.query(mappingQuery, {
+                        replacements: [id, apiMealId, apiMealId],
+                        type: sequelizeInstance.QueryTypes.UPSERT
+                    });
+                }
+            });
+
+            // Return createdMeals along with the promise for mapping updates
+            return Promise.all(mappingPromises).then(() => createdMeals);
+        })
+        .then(createdMeals => {
+            // Now createdMeals is defined here
             res.send({ result: 200, data: createdMeals });
         })
         .catch(error => {
@@ -49,6 +65,8 @@ const getAllMeals = (req, res) => {
             res.status(500).json({ message: error.message });
         });
 };
+
+
 
 
 
@@ -69,22 +87,32 @@ const getAllMeals = (req, res) => {
 //     }
 // };
 
+
+//use my Id to look up meal by (API's) Id in database (idMeal) then query then send back to frontend 
 const getMealById = async (req, res) => {
-    const { idMeal } = req.params; // Use the ID from TheMealDB API, not from your database
+    const { localId } = req.params; // Use the local ID assigned by your server
 
     try {
-        const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-        if (response.data.meals) {
-            const meal = response.data.meals[0]; // Assuming there's always one meal returned
+        const apiMealId = await getApiMealIdByLocalId(localId);
+        if (!apiMealId) {
+            return res.status(404).json({ message: "No corresponding meal found in TheMealDB" });
+        }
+
+        const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${apiMealId}`);
+        if (response.data.meals && response.data.meals.length > 0) {
+            const meal = response.data.meals[0];
             res.json(meal);
         } else {
-            res.status(404).json({ message: "Meal not found" });
+            res.status(404).json({ message: "Meal not found in TheMealDB" });
         }
     } catch (error) {
         console.error('Error fetching meal by ID:', error);
         res.status(500).json({ message: error.message });
     }
 };
+
+
+
 
 
 

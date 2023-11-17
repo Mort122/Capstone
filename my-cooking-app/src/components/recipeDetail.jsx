@@ -17,8 +17,9 @@ const RecipeDetail = () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setRecipe(data.meals[0]); // Assuming the API returns an array of meals and we want the first
-                console.log('Fetched recipe:', data.meals[0]);
+                setRecipe(data); // Assuming the API returns an array of meals and we want the first
+                
+                // console.log('Fetched recipe:', data);
             } catch (error) {
                 console.error('Error fetching recipe:', error);
             } finally {
@@ -44,7 +45,7 @@ const RecipeDetail = () => {
             </Container>
         );
     }
-
+console.log(recipe.strMeal);
     return (
         <Container maxWidth="md">
             <Card>
@@ -57,6 +58,7 @@ const RecipeDetail = () => {
                 <CardContent>
                     <Typography gutterBottom variant="h4" component="h1">
                         {recipe.strMeal}
+                        {/* {recipe.} */}
                     </Typography>
                     {/* Add more details as needed */}
                 </CardContent>

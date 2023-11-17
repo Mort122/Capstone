@@ -3,7 +3,7 @@ const User = require('./user');
 const Post = require('./posts');
 const Comment = require('./comments');
 const Like = require('./likes');
-const Meal = require('./meals');
+const { Meal } = require('./meals');
 
 User.hasMany(Post, { foreignKey: 'userId' });
 Post.belongsTo(User, { as: 'user' });
