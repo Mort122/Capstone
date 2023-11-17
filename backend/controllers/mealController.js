@@ -27,7 +27,7 @@ const getAllMeals = (req, res) => {
                     imageUrl, 
                     description, 
                     cuisine,
-                    apiMealId // Add this line to include TheMealDB's ID
+                    apiMealId 
                 };
             });
 
@@ -99,6 +99,7 @@ const getMealById = async (req, res) => {
         }
 
         const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${apiMealId}`);
+        // console.log('check apiMealId', apiMealId); this isnt returning anything
         if (response.data.meals && response.data.meals.length > 0) {
             const meal = response.data.meals[0];
             res.json(meal);

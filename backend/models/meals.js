@@ -17,7 +17,8 @@ const getApiMealIdByLocalId = async (localId) => {
         }
 
         console.log("Query results:", results);
-        return results.length > 0 ? results[0].apiMealId : null;
+        console.log(results['apiMealId']); 
+        return results['apiMealId'];
     } catch (error) {
         console.error('Error in getApiMealIdByLocalId:', error);
         throw error;

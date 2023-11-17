@@ -11,6 +11,7 @@ const RecipeDetail = () => {
         console.log("Fetching details for recipe with ID:", idMeal);
         const fetchRecipe = async () => {
             setIsLoading(true);
+            console.log('testing', `/api/meals/${idMeal}`)
             try {
                 const response = await fetch(`/api/meals/${idMeal}`);
                 if (!response.ok) {
