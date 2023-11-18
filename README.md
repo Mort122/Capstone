@@ -29,7 +29,7 @@ git clone https://github.com/Mort122/Capstone.git
 
 ## Install
 
-- Frontend Dependencies
+- Frontend Dependencies cd .\my-cooking-app\
 
 ```
 $ npm install --global
@@ -47,7 +47,10 @@ $ npm install axios
 $ npm install react-router-dom
 ```
 
-- Backend Dependencies
+
+
+
+- Backend Dependencies cd .\backend\
 
 ```
 $ npm install express
