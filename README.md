@@ -16,8 +16,8 @@ FlavorVerse allows users to find, view, or even create a recipe of their own and
 
 ## Technologies Used
 
-- Backend: Node.js, Express, Sequelize
-- Frontend: React, Vite, Material-UI
+- Backend: Node.js, Express, Sequelize, CORS, Nodemon, mySQL2
+- Frontend: React, Vite, Material-UI, Axios, react-router-dom
 - Database: mySQL
 
 
